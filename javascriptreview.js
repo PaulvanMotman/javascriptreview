@@ -107,39 +107,36 @@ console.log(npower(3,4));
 // Given an array of booleans, where the array represents a row of seated people, and each
 // boolean represents whether the seat is occupied or not, find the ideal seat for Jon.
 
-
-///////////DONT MIND THIS, I DIDN'T FIGURE IT OUT
-
-var seatdata = [false, true, false, false, true, false, false, false, true];
-
-function seatvalue (position, seats) {
-	var left = 0;
-	var right = 0;
-
-	if (seats[position]) {
-		return "seats taken"
+function findPerfectSeat(seats) {
+	var seatNumber = 0
+	var longestEmptyRow = 0
+	for (var i = 0; i < seats.length; i++) { // Go over all seats
+		var emtpySeatsRow = 1
+		var counter = 0
+		while (seats[i+counter] == false) { // Count amount of empty seats in a row
+			if (emtpySeatsRow >longestEmptyRow) {
+				longestEmptyRow = emtpySeatsRow
+				seatNumber = (i+i+counter)/2 // Store middle seat number of longest empty row
+			}
+			emtpySeatsRow += 1
+			counter ++
+		} 
 	}
-
-	for (var i = position + 1; i < (seats.length - position); i++) {
-		if (seats [i] == false) {
-			right++
-		} else {
-			i = seats.length++
-		}
-	}
-
-	console.log ("this seat has a right value of " + right)
-
-	if (left > right) {
-		return right
-	} else {
-		return left
+	if (seatNumber%1 == 0) { // If empty row length is even, only one ideal seat
+		return "Jon's ideal seat is seat: "+(seatNumber+1) // +1's because array starts at 0.
+	} else { // Else, found two ideal seats
+		return "Jon's ideal seat is either seat "+(Math.floor(seatNumber)+1)+" or seat "+(Math.round(seatNumber)+1)
 	}
 }
+// true = occupied, false = empty seat
+var seatedPeople1 = [true, false, false, false, true, false, false, false]
+var seatedPeople2 = [false, false, false, false, false, false, true, true]
+var seatedPeople3 = [true, true, true, true, true, false, true]
 
-for (var i = 0; i < seatdata.length; i++) {
-	console.log( seatvalue (i, seatdata))
-}
+console.log(findPerfectSeat(seatedPeople1))
+console.log(findPerfectSeat(seatedPeople2))
+console.log(findPerfectSeat(seatedPeople3))
+
 
 
 
